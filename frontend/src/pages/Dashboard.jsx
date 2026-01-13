@@ -4,19 +4,20 @@ import { LoadingState, ErrorState } from '../components/common';
 const StatCard = ({ title, value, icon, color, subValue }) => {
     const colorClasses = {
         primary: 'from-primary-500 to-primary-600 shadow-primary-500/25',
-        secondary: 'from-secondary-500 to-secondary-600 shadow-secondary-500/25',
-        danger: 'from-red-500 to-red-600 shadow-red-500/25',
-        warning: 'from-amber-500 to-amber-600 shadow-amber-500/25',
+        success: 'from-success-500 to-success-600 shadow-success-500/25',
+        danger: 'from-error-500 to-error-600 shadow-error-500/25',
+        warning: 'from-warning-500 to-warning-600 shadow-warning-500/25',
+        accent: 'from-accent-500 to-accent-600 shadow-accent-500/25',
     };
 
     return (
-        <div className="stat-card group hover:border-dark-600/70 transition-all duration-300">
+        <div className="stat-card group">
             <div className="flex items-start justify-between">
                 <div>
-                    <p className="text-dark-400 text-sm font-medium mb-1">{title}</p>
-                    <p className="text-3xl font-heading font-bold text-white mb-1">{value}</p>
+                    <p className="text-[var(--text-tertiary)] text-sm font-medium mb-1">{title}</p>
+                    <p className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-1">{value}</p>
                     {subValue && (
-                        <p className="text-xs text-dark-400">{subValue}</p>
+                        <p className="text-xs text-[var(--text-muted)]">{subValue}</p>
                     )}
                 </div>
                 <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${colorClasses[color]} flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform`}>
@@ -39,8 +40,8 @@ const Dashboard = () => {
         <div className="space-y-8 animate-fade-in">
             {/* Header */}
             <div>
-                <h1 className="text-3xl font-heading font-bold text-white mb-2">Dashboard</h1>
-                <p className="text-dark-400">Welcome back! Here's your HR overview for today.</p>
+                <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">Dashboard</h1>
+                <p className="text-[var(--text-tertiary)]">Welcome back! Here's your HR overview for today.</p>
             </div>
 
             {/* Stats Grid */}
@@ -59,7 +60,7 @@ const Dashboard = () => {
                     title="Present Today"
                     value={today?.present || 0}
                     subValue={`${today?.date || new Date().toISOString().split('T')[0]}`}
-                    color="secondary"
+                    color="success"
                     icon={
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -92,41 +93,41 @@ const Dashboard = () => {
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
                 {/* Departments */}
                 <div className="card">
-                    <h2 className="text-lg font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                        <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <h2 className="text-lg font-heading font-semibold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                         Departments
                     </h2>
                     {departments && departments.length > 0 ? (
-                        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-dark-600 scrollbar-track-dark-800">
+                        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 scrollbar-thin">
                             {departments.map((dept, idx) => (
-                                <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-dark-800/30 hover:bg-dark-800/50 transition-colors">
-                                    <span className="text-dark-200 font-medium">{dept.department}</span>
-                                    <span className="text-sm text-primary-400 font-semibold">{dept.count} employees</span>
+                                <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-[var(--surface-tertiary)] hover:bg-[var(--interactive-hover)] transition-colors">
+                                    <span className="text-[var(--text-secondary)] font-medium">{dept.department}</span>
+                                    <span className="text-sm text-primary-500 dark:text-primary-400 font-semibold">{dept.count} employees</span>
                                 </div>
                             ))}
                         </div>
                     ) : (
-                        <p className="text-dark-400 text-sm text-center py-8">No departments yet</p>
+                        <p className="text-[var(--text-muted)] text-sm text-center py-8">No departments yet</p>
                     )}
                 </div>
 
                 {/* Recent Attendance */}
                 <div className="card">
-                    <h2 className="text-lg font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                        <svg className="w-5 h-5 text-secondary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <h2 className="text-lg font-heading font-semibold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                        <svg className="w-5 h-5 text-success-500 dark:text-success-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                         </svg>
                         Recent Activity
                     </h2>
                     {recentAttendance && recentAttendance.length > 0 ? (
-                        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-dark-600 scrollbar-track-dark-800">
+                        <div className="space-y-3 max-h-64 overflow-y-auto pr-2 scrollbar-thin">
                             {recentAttendance.map((record, idx) => (
-                                <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-dark-800/30 hover:bg-dark-800/50 transition-colors">
+                                <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-[var(--surface-tertiary)] hover:bg-[var(--interactive-hover)] transition-colors">
                                     <div>
-                                        <p className="text-dark-200 font-medium">{record.employeeName}</p>
-                                        <p className="text-xs text-dark-400">{record.date}</p>
+                                        <p className="text-[var(--text-secondary)] font-medium">{record.employeeName}</p>
+                                        <p className="text-xs text-[var(--text-muted)]">{record.date}</p>
                                     </div>
                                     <span className={`badge ${record.status === 'Present' ? 'badge-success' : 'badge-danger'}`}>
                                         {record.status}
@@ -135,31 +136,31 @@ const Dashboard = () => {
                             ))}
                         </div>
                     ) : (
-                        <p className="text-dark-400 text-sm text-center py-8">No attendance records yet</p>
+                        <p className="text-[var(--text-muted)] text-sm text-center py-8">No attendance records yet</p>
                     )}
                 </div>
             </div>
 
             {/* Recent Employees */}
             <div className="card">
-                <h2 className="text-lg font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                    <svg className="w-5 h-5 text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <h2 className="text-lg font-heading font-semibold text-[var(--text-primary)] mb-4 flex items-center gap-2">
+                    <svg className="w-5 h-5 text-primary-500 dark:text-primary-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
                     </svg>
                     Recently Added Employees
                 </h2>
                 {recentEmployees && recentEmployees.length > 0 ? (
-                    <div className="max-h-72 overflow-y-auto pr-2 scrollbar-thin scrollbar-thumb-dark-600 scrollbar-track-dark-800">
+                    <div className="max-h-72 overflow-y-auto pr-2 scrollbar-thin">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                             {recentEmployees.map((emp) => (
-                                <div key={emp.id} className="p-4 rounded-xl bg-dark-800/30 hover:bg-dark-800/50 transition-colors border border-dark-700/30">
+                                <div key={emp.id} className="p-4 rounded-xl bg-[var(--surface-tertiary)] hover:bg-[var(--interactive-hover)] transition-colors border border-[var(--border-subtle)]">
                                     <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold">
+                                        <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold">
                                             {emp.fullName?.charAt(0).toUpperCase()}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-dark-100 font-medium truncate">{emp.fullName}</p>
-                                            <p className="text-xs text-dark-400 truncate">{emp.department}</p>
+                                            <p className="text-[var(--text-primary)] font-medium truncate">{emp.fullName}</p>
+                                            <p className="text-xs text-[var(--text-muted)] truncate">{emp.department}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -167,7 +168,7 @@ const Dashboard = () => {
                         </div>
                     </div>
                 ) : (
-                    <p className="text-dark-400 text-sm text-center py-8">No employees added yet</p>
+                    <p className="text-[var(--text-muted)] text-sm text-center py-8">No employees added yet</p>
                 )}
             </div>
         </div>

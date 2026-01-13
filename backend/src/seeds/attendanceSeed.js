@@ -33,7 +33,7 @@ const seedAttendance = async () => {
                 const isPresent = Math.random() > 0.15;
 
                 attendanceRecords.push({
-                    employee_id: employee.id,
+                    employeeId: employee.id,
                     date: dateStr,
                     status: isPresent ? 'Present' : 'Absent'
                 });

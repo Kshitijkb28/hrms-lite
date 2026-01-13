@@ -1,4 +1,5 @@
 import { NavLink } from 'react-router-dom';
+import ThemeToggle from './ThemeToggle';
 
 const Sidebar = () => {
     const navItems = [
@@ -32,18 +33,18 @@ const Sidebar = () => {
     ];
 
     return (
-        <aside className="fixed left-0 top-0 h-screen w-64 bg-dark-900/50 backdrop-blur-xl border-r border-dark-700/50 flex flex-col z-40">
+        <aside className="fixed left-0 top-0 h-screen w-64 bg-[var(--surface-secondary)] backdrop-blur-xl border-r border-[var(--border-primary)] flex flex-col z-40 transition-colors duration-300">
             {/* Logo */}
-            <div className="p-6 border-b border-dark-700/50">
+            <div className="p-6 border-b border-[var(--border-subtle)]">
                 <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center shadow-lg shadow-primary-500/25">
+                    <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-success-500 flex items-center justify-center shadow-lg shadow-primary-500/25">
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                         </svg>
                     </div>
                     <div>
-                        <h1 className="font-heading font-bold text-lg text-white">HRMS Lite</h1>
-                        <p className="text-xs text-dark-400">Employee Management</p>
+                        <h1 className="font-heading font-bold text-lg text-[var(--text-primary)]">HRMS Lite</h1>
+                        <p className="text-xs text-[var(--text-muted)]">Employee Management</p>
                     </div>
                 </div>
             </div>
@@ -56,8 +57,8 @@ const Sidebar = () => {
                         to={item.path}
                         className={({ isActive }) =>
                             `flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 group ${isActive
-                                ? 'bg-primary-500/10 text-primary-400 border border-primary-500/20'
-                                : 'text-dark-400 hover:text-dark-100 hover:bg-dark-800/50'
+                                ? 'bg-primary-500/10 text-primary-500 dark:text-primary-400 border border-primary-500/20'
+                                : 'text-[var(--text-tertiary)] hover:text-[var(--text-primary)] hover:bg-[var(--interactive-hover)]'
                             }`
                         }
                     >
@@ -67,15 +68,22 @@ const Sidebar = () => {
                 ))}
             </nav>
 
-            {/* Footer */}
-            <div className="p-4 border-t border-dark-700/50">
-                <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-dark-800/30">
-                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-600 to-secondary-600 flex items-center justify-center text-white text-sm font-bold">
+            {/* Footer with Theme Toggle */}
+            <div className="p-4 border-t border-[var(--border-subtle)]">
+                {/* Theme Toggle */}
+                <div className="flex items-center justify-between px-4 py-2 mb-3">
+                    <span className="text-sm text-[var(--text-tertiary)]">Theme</span>
+                    <ThemeToggle />
+                </div>
+
+                {/* User Info */}
+                <div className="flex items-center gap-3 px-4 py-3 rounded-xl bg-[var(--surface-tertiary)]">
+                    <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-primary-600 to-accent-600 flex items-center justify-center text-white text-sm font-bold">
                         A
                     </div>
                     <div className="flex-1 min-w-0">
-                        <p className="text-sm font-medium text-dark-100 truncate">Admin User</p>
-                        <p className="text-xs text-dark-400 truncate">admin@hrms.com</p>
+                        <p className="text-sm font-medium text-[var(--text-primary)] truncate">Admin User</p>
+                        <p className="text-xs text-[var(--text-muted)] truncate">admin@hrms.com</p>
                     </div>
                 </div>
             </div>

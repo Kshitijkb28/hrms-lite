@@ -28,29 +28,23 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
     useEffect(() => {
         if (isOpen && inputRef.current) {
             const rect = inputRef.current.getBoundingClientRect();
-            const calendarHeight = 400; // Height including padding and quick actions
-            const calendarWidth = 288; // 18rem = 288px
+            const calendarHeight = 400;
+            const calendarWidth = 288;
             const margin = 8;
 
-            // Calculate available space
             const spaceBelow = window.innerHeight - rect.bottom - margin;
             const spaceAbove = rect.top - margin;
 
             let top, left;
 
-            // Decide whether to open above or below
             if (spaceBelow < calendarHeight && spaceAbove > calendarHeight) {
-                // Open above - position from bottom of element going up
                 top = rect.top - calendarHeight - margin;
             } else if (spaceBelow < calendarHeight) {
-                // Not enough space either way, constrain to viewport
                 top = Math.max(margin, window.innerHeight - calendarHeight - margin);
             } else {
-                // Open below
                 top = rect.bottom + margin;
             }
 
-            // Constrain horizontally
             left = rect.left;
             if (left + calendarWidth > window.innerWidth - margin) {
                 left = window.innerWidth - calendarWidth - margin;
@@ -162,19 +156,19 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
                 className="input flex items-center justify-between cursor-pointer"
             >
                 <div className="flex items-center gap-3">
-                    <svg className="w-5 h-5 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-5 h-5 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <span className={value ? 'text-dark-100' : 'text-dark-400'}>
+                    <span className={value ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}>
                         {value ? formatDisplayDate(value) : placeholder}
                     </span>
                 </div>
                 {value && (
                     <button
                         onClick={clearDate}
-                        className="p-1 hover:bg-dark-700 rounded-lg transition-colors"
+                        className="p-1 hover:bg-[var(--interactive-hover)] rounded-lg transition-colors"
                     >
-                        <svg className="w-4 h-4 text-dark-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <svg className="w-4 h-4 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
@@ -184,7 +178,7 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
             {isOpen && createPortal(
                 <div
                     id="datepicker-calendar-portal"
-                    className="fixed w-72 bg-dark-800 border border-dark-600 rounded-xl shadow-2xl p-4 z-[9999] animate-scale-in"
+                    className="datepicker-dropdown fixed w-72 rounded-xl shadow-2xl p-4 z-[9999] animate-scale-in"
                     style={{
                         top: dropdownPosition.top,
                         left: dropdownPosition.left,
@@ -194,20 +188,20 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
                     <div className="flex items-center justify-between mb-4">
                         <button
                             onClick={prevMonth}
-                            className="p-2 hover:bg-dark-700 rounded-lg transition-colors"
+                            className="p-2 hover:bg-[var(--interactive-hover)] rounded-lg transition-colors"
                         >
-                            <svg className="w-5 h-5 text-dark-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 text-[var(--text-tertiary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                             </svg>
                         </button>
-                        <span className="font-medium text-dark-100">
+                        <span className="font-medium text-[var(--text-primary)]">
                             {months[currentMonth.getMonth()]} {currentMonth.getFullYear()}
                         </span>
                         <button
                             onClick={nextMonth}
-                            className="p-2 hover:bg-dark-700 rounded-lg transition-colors"
+                            className="p-2 hover:bg-[var(--interactive-hover)] rounded-lg transition-colors"
                         >
-                            <svg className="w-5 h-5 text-dark-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <svg className="w-5 h-5 text-[var(--text-tertiary)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                             </svg>
                         </button>
@@ -216,7 +210,7 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
                     {/* Days of week */}
                     <div className="grid grid-cols-7 gap-1 mb-2">
                         {daysOfWeek.map((day) => (
-                            <div key={day} className="text-center text-xs font-medium text-dark-400 py-2">
+                            <div key={day} className="text-center text-xs font-medium text-[var(--text-muted)] py-2">
                                 {day}
                             </div>
                         ))}
@@ -232,9 +226,9 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
                                 className={`
                   w-9 h-9 rounded-lg text-sm font-medium transition-all
                   ${!day ? 'invisible' : ''}
-                  ${isDateDisabled(day) ? 'text-dark-600 cursor-not-allowed' : 'hover:bg-dark-700 cursor-pointer'}
+                  ${isDateDisabled(day) ? 'text-[var(--text-muted)] opacity-40 cursor-not-allowed' : 'hover:bg-[var(--interactive-hover)] cursor-pointer'}
                   ${isSelected(day) ? 'bg-primary-600 text-white hover:bg-primary-500' : ''}
-                  ${isToday(day) && !isSelected(day) ? 'border border-primary-500 text-primary-400' : 'text-dark-200'}
+                  ${isToday(day) && !isSelected(day) ? 'border border-primary-500 text-primary-500' : 'text-[var(--text-secondary)]'}
                 `}
                             >
                                 {day}
@@ -243,16 +237,16 @@ const DatePicker = ({ value, onChange, max, min, label, placeholder = 'Select da
                     </div>
 
                     {/* Quick actions */}
-                    <div className="flex gap-2 mt-4 pt-4 border-t border-dark-700">
+                    <div className="flex gap-2 mt-4 pt-4 border-t border-[var(--border-primary)]">
                         <button
                             onClick={() => handleDateClick(new Date().getDate())}
-                            className="flex-1 py-2 text-sm font-medium text-primary-400 hover:bg-primary-500/10 rounded-lg transition-colors"
+                            className="flex-1 py-2 text-sm font-medium text-primary-500 hover:bg-primary-500/10 rounded-lg transition-colors"
                         >
                             Today
                         </button>
                         <button
                             onClick={clearDate}
-                            className="flex-1 py-2 text-sm font-medium text-dark-400 hover:bg-dark-700 rounded-lg transition-colors"
+                            className="flex-1 py-2 text-sm font-medium text-[var(--text-tertiary)] hover:bg-[var(--interactive-hover)] rounded-lg transition-colors"
                         >
                             Clear
                         </button>

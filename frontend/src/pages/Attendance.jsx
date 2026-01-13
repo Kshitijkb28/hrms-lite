@@ -90,15 +90,15 @@ const MarkAttendanceForm = ({ onSubmit, onCancel, isSubmitting }) => {
                     max={new Date().toISOString().split('T')[0]}
                     placeholder="Select attendance date"
                 />
-                {errors.date && <p className="text-red-400 text-xs mt-1">{errors.date}</p>}
+                {errors.date && <p className="text-error-400 text-xs mt-1">{errors.date}</p>}
             </div>
 
             <div>
                 <label className="label">Status</label>
                 <div className="flex gap-4">
                     <label className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-xl border cursor-pointer transition-all ${formData.status === 'Present'
-                        ? 'bg-secondary-500/20 border-secondary-500/50 text-secondary-400'
-                        : 'bg-dark-800/50 border-dark-600/50 text-dark-300 hover:border-dark-500'
+                        ? 'bg-success-500/20 border-success-500/50 text-success-400'
+                        : 'bg-[var(--surface-tertiary)] border-[var(--border-primary)] text-[var(--text-tertiary)] hover:border-[var(--text-muted)]'
                         }`}>
                         <input
                             type="radio"
@@ -114,8 +114,8 @@ const MarkAttendanceForm = ({ onSubmit, onCancel, isSubmitting }) => {
                         Present
                     </label>
                     <label className={`flex-1 flex items-center justify-center gap-2 p-4 rounded-xl border cursor-pointer transition-all ${formData.status === 'Absent'
-                        ? 'bg-red-500/20 border-red-500/50 text-red-400'
-                        : 'bg-dark-800/50 border-dark-600/50 text-dark-300 hover:border-dark-500'
+                        ? 'bg-error-500/20 border-error-500/50 text-error-400'
+                        : 'bg-[var(--surface-tertiary)] border-[var(--border-primary)] text-[var(--text-tertiary)] hover:border-[var(--text-muted)]'
                         }`}>
                         <input
                             type="radio"
@@ -231,8 +231,8 @@ const Attendance = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-heading font-bold text-white mb-2">Attendance</h1>
-                    <p className="text-dark-400">Track and manage employee attendance</p>
+                    <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">Attendance</h1>
+                    <p className="text-[var(--text-tertiary)]">Track and manage employee attendance</p>
                 </div>
                 <button onClick={() => setIsMarkModalOpen(true)} className="btn btn-primary">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -314,16 +314,16 @@ const Attendance = () => {
                                     <tr key={record.id}>
                                         <td>
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold flex-shrink-0">
+                                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold flex-shrink-0">
                                                     {record.employee?.fullName?.charAt(0).toUpperCase() || '?'}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-dark-100">{record.employee?.fullName || 'Unknown'}</p>
-                                                    <p className="text-xs text-dark-400">{record.employee?.employeeId || '-'}</p>
+                                                    <p className="font-medium text-[var(--text-primary)]">{record.employee?.fullName || 'Unknown'}</p>
+                                                    <p className="text-xs text-[var(--text-muted)]">{record.employee?.employeeId || '-'}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="text-dark-200 font-medium">
+                                        <td className="text-[var(--text-secondary)] font-medium">
                                             {new Date(record.date).toLocaleDateString('en-US', {
                                                 weekday: 'short',
                                                 year: 'numeric',
@@ -345,7 +345,7 @@ const Attendance = () => {
                                                 {record.status}
                                             </span>
                                         </td>
-                                        <td className="text-dark-400 text-sm">
+                                        <td className="text-[var(--text-muted)] text-sm">
                                             {new Date(record.created_at).toLocaleString()}
                                         </td>
                                     </tr>

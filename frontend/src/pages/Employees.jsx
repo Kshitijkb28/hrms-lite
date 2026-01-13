@@ -49,7 +49,7 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
                     className={`input ${errors.employeeId ? 'input-error' : ''}`}
                     placeholder="e.g., EMP001"
                 />
-                {errors.employeeId && <p className="text-red-400 text-xs mt-1">{errors.employeeId}</p>}
+                {errors.employeeId && <p className="text-error-400 text-xs mt-1">{errors.employeeId}</p>}
             </div>
 
             <div>
@@ -62,7 +62,7 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
                     className={`input ${errors.fullName ? 'input-error' : ''}`}
                     placeholder="e.g., John Doe"
                 />
-                {errors.fullName && <p className="text-red-400 text-xs mt-1">{errors.fullName}</p>}
+                {errors.fullName && <p className="text-error-400 text-xs mt-1">{errors.fullName}</p>}
             </div>
 
             <div>
@@ -75,7 +75,7 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
                     className={`input ${errors.email ? 'input-error' : ''}`}
                     placeholder="e.g., john.doe@company.com"
                 />
-                {errors.email && <p className="text-red-400 text-xs mt-1">{errors.email}</p>}
+                {errors.email && <p className="text-error-400 text-xs mt-1">{errors.email}</p>}
             </div>
 
             <div>
@@ -88,7 +88,7 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
                     className={`input ${errors.department ? 'input-error' : ''}`}
                     placeholder="e.g., Engineering"
                 />
-                {errors.department && <p className="text-red-400 text-xs mt-1">{errors.department}</p>}
+                {errors.department && <p className="text-error-400 text-xs mt-1">{errors.department}</p>}
             </div>
 
             <div className="flex gap-3 pt-4">
@@ -118,14 +118,14 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
 const DeleteConfirmModal = ({ employee, onConfirm, onCancel, isDeleting }) => {
     return (
         <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-amber-500/20 flex items-center justify-center">
-                <svg className="w-8 h-8 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-warning-500/20 flex items-center justify-center">
+                <svg className="w-8 h-8 text-warning-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 8h14M5 8a2 2 0 110-4h14a2 2 0 110 4M5 8v10a2 2 0 002 2h10a2 2 0 002-2V8m-9 4h4" />
                 </svg>
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">Archive Employee</h3>
-            <p className="text-dark-400 mb-6">
-                Are you sure you want to archive <strong className="text-dark-200">{employee?.fullName}</strong>?
+            <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">Archive Employee</h3>
+            <p className="text-[var(--text-tertiary)] mb-6">
+                Are you sure you want to archive <strong className="text-[var(--text-secondary)]">{employee?.fullName}</strong>?
                 The employee record will be hidden but can be restored later.
             </p>
             <div className="flex gap-3">
@@ -223,8 +223,8 @@ const Employees = () => {
             {/* Header */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                 <div>
-                    <h1 className="text-3xl font-heading font-bold text-white mb-2">Employees</h1>
-                    <p className="text-dark-400">Manage your employee records</p>
+                    <h1 className="text-3xl font-heading font-bold text-[var(--text-primary)] mb-2">Employees</h1>
+                    <p className="text-[var(--text-tertiary)]">Manage your employee records</p>
                 </div>
                 <button onClick={() => setIsAddModalOpen(true)} className="btn btn-primary">
                     <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -236,7 +236,7 @@ const Employees = () => {
 
             {/* Search - Dark style matching reference design */}
             <div className="relative">
-                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-dark-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[var(--text-muted)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
                 </svg>
                 <input
@@ -244,7 +244,7 @@ const Employees = () => {
                     placeholder="Search by name, ID, or email..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-dark-800 border border-dark-700 rounded-lg py-3 pl-12 pr-4 text-dark-200 placeholder-dark-500 focus:outline-none focus:border-dark-600 focus:ring-1 focus:ring-dark-600 transition-colors"
+                    className="input pl-12"
                 />
             </div>
 
@@ -279,26 +279,26 @@ const Employees = () => {
                                     <tr key={employee.id}>
                                         <td>
                                             <div className="flex items-center gap-3">
-                                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-secondary-500 flex items-center justify-center text-white font-bold flex-shrink-0">
+                                                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold flex-shrink-0">
                                                     {employee.fullName?.charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-dark-100">{employee.fullName}</p>
-                                                    <p className="text-xs text-dark-400">{employee.employeeId}</p>
+                                                    <p className="font-medium text-[var(--text-primary)]">{employee.fullName}</p>
+                                                    <p className="text-xs text-[var(--text-muted)]">{employee.employeeId}</p>
                                                 </div>
                                             </div>
                                         </td>
-                                        <td className="text-dark-300">{employee.email}</td>
+                                        <td className="text-[var(--text-secondary)]">{employee.email}</td>
                                         <td>
                                             <span className="badge badge-info">{employee.department}</span>
                                         </td>
-                                        <td className="text-dark-400 text-sm">
+                                        <td className="text-[var(--text-muted)] text-sm">
                                             {new Date(employee.created_at).toLocaleDateString()}
                                         </td>
                                         <td className="text-right">
                                             <button
                                                 onClick={() => setDeleteEmployee(employee)}
-                                                className="btn btn-ghost btn-icon text-amber-400 hover:text-amber-300 hover:bg-amber-500/10"
+                                                className="btn btn-ghost btn-icon text-warning-400 hover:text-warning-300 hover:bg-warning-500/10"
                                                 title="Archive employee"
                                             >
                                                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

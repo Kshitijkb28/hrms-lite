@@ -77,7 +77,9 @@ const initDb = async () => {
     if (!dbInitialized) {
         try {
             await sequelize.authenticate();
-            await sequelize.sync({ alter: true });
+            // Use force: false to only create tables if they don't exist
+            // This avoids alter table conflicts with foreign keys
+            await sequelize.sync({ force: false });
             dbInitialized = true;
             console.log('Database connected and synced');
         } catch (error) {
@@ -95,7 +97,8 @@ if (process.env.NODE_ENV !== 'production' && require.main === module) {
         try {
             await sequelize.authenticate();
             console.log('Database connected successfully');
-            await sequelize.sync({ alter: true });
+            // Use force: false to only create tables if they don't exist
+            await sequelize.sync({ force: false });
             console.log('Database synced');
 
             app.listen(PORT, () => {

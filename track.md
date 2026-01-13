@@ -41,6 +41,15 @@ HRMS Lite - A lightweight Human Resource Management System for managing employee
 - [x] Fixed import path issues
 - [x] Fixed Tailwind CSS v4 compatibility
 
+#### Design System Overhaul (2026-01-13)
+- [x] Created comprehensive design tokens (colors, typography, spacing)
+- [x] Added WCAG-compliant color palette (primary, accent, success, warning, error)
+- [x] Implemented 8px spacing grid system
+- [x] Added light/dark mode support with ThemeToggle component
+- [x] Enhanced button, input, card, table, badge, modal styles
+- [x] Updated all pages (Dashboard, Employees, Attendance) with CSS custom properties
+- [x] Created `design-tokens.md` developer documentation
+
 ## Running the Application
 
 ### Backend (Port 5000)

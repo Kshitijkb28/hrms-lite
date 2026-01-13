@@ -8,4 +8,6 @@ export { default as Toast } from './Toast';
 export { default as DatePicker } from './DatePicker';
 export { default as Pagination } from './Pagination';
 export { default as Select } from './Select';
+export { default as ThemeToggle } from './ThemeToggle';
+
 
