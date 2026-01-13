@@ -23,6 +23,21 @@ if (process.env.NODE_ENV === 'development') {
     });
 }
 
+// Root endpoint
+app.get('/', (req, res) => {
+    res.json({
+        success: true,
+        message: 'HRMS Lite API Server',
+        version: '1.0.0',
+        endpoints: {
+            health: '/api/health',
+            dashboard: '/api/dashboard',
+            employees: '/api/employees',
+            attendance: '/api/attendance'
+        }
+    });
+});
+
 // Health check
 app.get('/api/health', (req, res) => {
     res.json({
