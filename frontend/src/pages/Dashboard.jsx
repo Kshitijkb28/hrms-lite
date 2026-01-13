@@ -34,7 +34,11 @@ const Dashboard = () => {
     if (loading) return <LoadingState message="Loading dashboard..." />;
     if (error) return <ErrorState message={error} onRetry={refetch} />;
 
-    const { totalEmployees, today, departments, recentAttendance, recentEmployees } = data || {};
+    const stats = data?.stats || {};
+    const { totalEmployees, presentToday, absentToday, notMarked, date } = stats;
+    const departments = data?.departments || [];
+    const recentAttendance = data?.recentAttendance || [];
+    const recentEmployees = data?.recentEmployees || [];
 
     return (
         <div className="space-y-8 animate-fade-in">
@@ -58,8 +62,8 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Present Today"
-                    value={today?.present || 0}
-                    subValue={`${today?.date || new Date().toISOString().split('T')[0]}`}
+                    value={presentToday || 0}
+                    subValue={date || new Date().toISOString().split('T')[0]}
                     color="success"
                     icon={
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -69,7 +73,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Absent Today"
-                    value={today?.absent || 0}
+                    value={absentToday || 0}
                     color="danger"
                     icon={
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -79,7 +83,7 @@ const Dashboard = () => {
                 />
                 <StatCard
                     title="Not Marked"
-                    value={today?.notMarked || 0}
+                    value={notMarked || 0}
                     color="warning"
                     icon={
                         <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -126,7 +130,7 @@ const Dashboard = () => {
                             {recentAttendance.map((record, idx) => (
                                 <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-[var(--surface-tertiary)] hover:bg-[var(--interactive-hover)] transition-colors">
                                     <div>
-                                        <p className="text-[var(--text-secondary)] font-medium">{record.employeeName}</p>
+                                        <p className="text-[var(--text-secondary)] font-medium">{record.employee?.name || 'Unknown'}</p>
                                         <p className="text-xs text-[var(--text-muted)]">{record.date}</p>
                                     </div>
                                     <span className={`badge ${record.status === 'Present' ? 'badge-success' : 'badge-danger'}`}>
@@ -156,10 +160,10 @@ const Dashboard = () => {
                                 <div key={emp.id} className="p-4 rounded-xl bg-[var(--surface-tertiary)] hover:bg-[var(--interactive-hover)] transition-colors border border-[var(--border-subtle)]">
                                     <div className="flex items-center gap-3">
                                         <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold">
-                                            {emp.fullName?.charAt(0).toUpperCase()}
+                                            {emp.name?.charAt(0).toUpperCase()}
                                         </div>
                                         <div className="flex-1 min-w-0">
-                                            <p className="text-[var(--text-primary)] font-medium truncate">{emp.fullName}</p>
+                                            <p className="text-[var(--text-primary)] font-medium truncate">{emp.name}</p>
                                             <p className="text-xs text-[var(--text-muted)] truncate">{emp.department}</p>
                                         </div>
                                     </div>

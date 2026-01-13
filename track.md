@@ -50,6 +50,25 @@ HRMS Lite - A lightweight Human Resource Management System for managing employee
 - [x] Updated all pages (Dashboard, Employees, Attendance) with CSS custom properties
 - [x] Created `design-tokens.md` developer documentation
 
+#### Vercel Deployment (2026-01-13)
+- [x] Deployed backend to Vercel as serverless function
+- [x] Connected backend to TiDB Cloud (MySQL) with SSL
+- [x] Deployed frontend to Vercel with Vite
+- [x] Configured VITE_API_URL environment variable
+- [x] Verified both endpoints working
+
+## Live Deployment URLs
+
+### Production URLs
+- **Frontend**: https://frontend-rho-inky-81.vercel.app
+- **Backend API**: https://backend-ebon-one-54.vercel.app
+
+### API Endpoints (Production)
+- Health: https://backend-ebon-one-54.vercel.app/api/health
+- Dashboard: https://backend-ebon-one-54.vercel.app/api/dashboard
+- Employees: https://backend-ebon-one-54.vercel.app/api/employees
+- Attendance: https://backend-ebon-one-54.vercel.app/api/attendance
+
 ## Running the Application
 
 ### Backend (Port 5000)

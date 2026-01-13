@@ -6,8 +6,7 @@
             "use": "@vercel/node",
             "config": {
                 "includeFiles": [
-                    "src/**",
-                    "package.json"
+                    "api/node_modules/**"
                 ]
             }
         }

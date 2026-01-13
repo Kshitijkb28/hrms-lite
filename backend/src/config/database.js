@@ -1,5 +1,5 @@
 const { Sequelize } = require('sequelize');
-require('dotenv').config();
+// dotenv is loaded by app.js or by Vercel in production
 
 const isProduction = process.env.NODE_ENV === 'production';
 

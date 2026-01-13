@@ -1,6 +1,15 @@
-require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
+
+// Load dotenv only in development - Vercel provides env vars in production
+if (process.env.NODE_ENV !== 'production') {
+    try {
+        require('dotenv').config();
+    } catch (e) {
+        console.log('dotenv not available, using process.env directly');
+    }
+}
+
 const sequelize = require('./config/database');
 const { employeeRoutes, attendanceRoutes, dashboardRoutes } = require('./routes');
 
@@ -114,4 +123,3 @@ if (process.env.NODE_ENV !== 'production' && require.main === module) {
 }
 
 module.exports = app;
-

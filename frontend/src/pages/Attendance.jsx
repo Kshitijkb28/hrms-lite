@@ -76,7 +76,7 @@ const MarkAttendanceForm = ({ onSubmit, onCancel, isSubmitting }) => {
                         error={errors.employeeId}
                         options={employees.map((emp) => ({
                             value: emp.id,
-                            label: `${emp.fullName} (${emp.employeeId})`
+                            label: `${emp.name} (${emp.employeeId})`
                         }))}
                     />
                 )}
@@ -315,10 +315,10 @@ const Attendance = () => {
                                         <td>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold flex-shrink-0">
-                                                    {record.employee?.fullName?.charAt(0).toUpperCase() || '?'}
+                                                    {record.employee?.name?.charAt(0).toUpperCase() || '?'}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-[var(--text-primary)]">{record.employee?.fullName || 'Unknown'}</p>
+                                                    <p className="font-medium text-[var(--text-primary)]">{record.employee?.name || 'Unknown'}</p>
                                                     <p className="text-xs text-[var(--text-muted)]">{record.employee?.employeeId || '-'}</p>
                                                 </div>
                                             </div>
@@ -346,7 +346,7 @@ const Attendance = () => {
                                             </span>
                                         </td>
                                         <td className="text-[var(--text-muted)] text-sm">
-                                            {new Date(record.created_at).toLocaleString()}
+                                            {new Date(record.createdAt).toLocaleString()}
                                         </td>
                                     </tr>
                                 ))}

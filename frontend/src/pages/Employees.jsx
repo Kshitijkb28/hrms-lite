@@ -4,10 +4,10 @@ import { employeeAPI } from '../services/api';
 
 const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
     const [formData, setFormData] = useState({
-        employeeId: '',
         fullName: '',
         email: '',
         department: '',
+        position: '',
     });
     const [errors, setErrors] = useState({});
 
@@ -21,11 +21,11 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
 
     const validate = () => {
         const newErrors = {};
-        if (!formData.employeeId.trim()) newErrors.employeeId = 'Employee ID is required';
         if (!formData.fullName.trim()) newErrors.fullName = 'Full name is required';
         if (!formData.email.trim()) newErrors.email = 'Email is required';
         else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email)) newErrors.email = 'Invalid email format';
         if (!formData.department.trim()) newErrors.department = 'Department is required';
+        if (!formData.position.trim()) newErrors.position = 'Position is required';
         setErrors(newErrors);
         return Object.keys(newErrors).length === 0;
     };
@@ -39,19 +39,6 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
 
     return (
         <form onSubmit={handleSubmit} className="space-y-5">
-            <div>
-                <label className="label">Employee ID</label>
-                <input
-                    type="text"
-                    name="employeeId"
-                    value={formData.employeeId}
-                    onChange={handleChange}
-                    className={`input ${errors.employeeId ? 'input-error' : ''}`}
-                    placeholder="e.g., EMP001"
-                />
-                {errors.employeeId && <p className="text-error-400 text-xs mt-1">{errors.employeeId}</p>}
-            </div>
-
             <div>
                 <label className="label">Full Name</label>
                 <input
@@ -91,6 +78,19 @@ const AddEmployeeForm = ({ onSubmit, onCancel, isSubmitting }) => {
                 {errors.department && <p className="text-error-400 text-xs mt-1">{errors.department}</p>}
             </div>
 
+            <div>
+                <label className="label">Position</label>
+                <input
+                    type="text"
+                    name="position"
+                    value={formData.position}
+                    onChange={handleChange}
+                    className={`input ${errors.position ? 'input-error' : ''}`}
+                    placeholder="e.g., Senior Developer"
+                />
+                {errors.position && <p className="text-error-400 text-xs mt-1">{errors.position}</p>}
+            </div>
+
             <div className="flex gap-3 pt-4">
                 <button type="button" onClick={onCancel} className="btn btn-secondary flex-1">
                     Cancel
@@ -125,7 +125,7 @@ const DeleteConfirmModal = ({ employee, onConfirm, onCancel, isDeleting }) => {
             </div>
             <h3 className="text-lg font-semibold text-[var(--text-primary)] mb-2">Archive Employee</h3>
             <p className="text-[var(--text-tertiary)] mb-6">
-                Are you sure you want to archive <strong className="text-[var(--text-secondary)]">{employee?.fullName}</strong>?
+                Are you sure you want to archive <strong className="text-[var(--text-secondary)]">{employee?.name}</strong>?
                 The employee record will be hidden but can be restored later.
             </p>
             <div className="flex gap-3">
@@ -189,7 +189,14 @@ const Employees = () => {
     const handleAddEmployee = async (data) => {
         setIsSubmitting(true);
         try {
-            await employeeAPI.create(data);
+            // Transform fullName to name for API
+            const apiData = {
+                ...data,
+                name: data.fullName,
+                joinDate: new Date().toISOString().split('T')[0]
+            };
+            delete apiData.fullName;
+            await employeeAPI.create(apiData);
             setIsAddModalOpen(false);
             showToast('Employee added successfully!', 'success');
             fetchEmployees();
@@ -280,10 +287,10 @@ const Employees = () => {
                                         <td>
                                             <div className="flex items-center gap-3">
                                                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-primary-500 to-accent-500 flex items-center justify-center text-white font-bold flex-shrink-0">
-                                                    {employee.fullName?.charAt(0).toUpperCase()}
+                                                    {employee.name?.charAt(0).toUpperCase()}
                                                 </div>
                                                 <div>
-                                                    <p className="font-medium text-[var(--text-primary)]">{employee.fullName}</p>
+                                                    <p className="font-medium text-[var(--text-primary)]">{employee.name}</p>
                                                     <p className="text-xs text-[var(--text-muted)]">{employee.employeeId}</p>
                                                 </div>
                                             </div>
@@ -293,7 +300,7 @@ const Employees = () => {
                                             <span className="badge badge-info">{employee.department}</span>
                                         </td>
                                         <td className="text-[var(--text-muted)] text-sm">
-                                            {new Date(employee.created_at).toLocaleDateString()}
+                                            {new Date(employee.createdAt).toLocaleDateString()}
                                         </td>
                                         <td className="text-right">
                                             <button
