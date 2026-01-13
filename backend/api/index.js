@@ -259,15 +259,26 @@ app.get('/api/employees', async (req, res) => {
 app.post('/api/employees', async (req, res) => {
     try {
         const { name, email, phone, department, position, salary, joinDate, status } = req.body;
-        const count = await Employee.count();
-        const employeeId = `EMP${String(count + 1).padStart(3, '0')}`;
+
+        // Find the highest existing employee number to avoid duplicates
+        const lastEmployee = await Employee.findOne({
+            order: [['id', 'DESC']],
+            paranoid: false // Include soft-deleted records
+        });
+        const nextNum = lastEmployee ? lastEmployee.id + 1 : 1;
+        const employeeId = `EMP${String(nextNum).padStart(3, '0')}`;
 
         const employee = await Employee.create({
             employeeId, name, email, phone, department, position, salary, joinDate, status: status || 'Active'
         });
         res.status(201).json({ success: true, data: employee });
     } catch (error) {
-        res.status(400).json({ success: false, error: error.message });
+        console.error('Employee creation error:', error);
+        // Return more specific error message for debugging
+        const errorMessage = error.errors
+            ? error.errors.map(e => `${e.path}: ${e.message}`).join(', ')
+            : error.message;
+        res.status(400).json({ success: false, error: errorMessage });
     }
 });
 
