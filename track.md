@@ -78,9 +78,40 @@ npm run dev
 - GET /api/attendance/summary - Full summary
 
 ## Deployment Status
-- [ ] Deploy backend to Render
+
+### TiDB Cloud Database (COMPLETED)
+- [x] Created TiDB Serverless cluster
+- [x] Database: hrms_lite
+- **Connection Details:**
+  - Host: `gateway01.ap-southeast-1.prod.aws.tidbcloud.com`
+  - Port: `4000`
+  - User: `4C3pWCoeLYJaDxv.root`
+  - Password: `jqj0ZD3tWkUGabY9`
+  - Database: `hrms_lite`
+
+### Backend Deployment (IN PROGRESS)
+- [x] Created Vercel project: `hrms-lite-backend`
+- [x] Set Root Directory to `backend`
+- [x] Build successful
+- [ ] **NEXT STEP: Add environment variables in Vercel**
+- [ ] Redeploy after adding env vars
+- **Backend URL**: https://hrms-lite-backend.vercel.app
+
+### Environment Variables to Add in Vercel:
+| Name | Value |
+|------|-------|
+| NODE_ENV | production |
+| DB_HOST | gateway01.ap-southeast-1.prod.aws.tidbcloud.com |
+| DB_PORT | 4000 |
+| DB_USER | 4C3pWCoeLYJaDxv.root |
+| DB_PASSWORD | jqj0ZD3tWkUGabY9 |
+| DB_NAME | hrms_lite |
+
+### Frontend Deployment (PENDING)
 - [ ] Deploy frontend to Vercel
-- [ ] Test deployed application
+- [ ] Set Root Directory to `frontend`
+- [ ] Add VITE_API_URL environment variable
+- **Frontend URL**: (pending)
 
 ## Notes
 - Using Tailwind CSS v4 with @tailwindcss/postcss

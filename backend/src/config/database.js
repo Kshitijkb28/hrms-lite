@@ -26,7 +26,7 @@ const sequelize = new Sequelize(
         dialectOptions: isProduction ? {
             ssl: {
                 minVersion: 'TLSv1.2',
-                rejectUnauthorized: true
+                rejectUnauthorized: false
             }
         } : {}
     }
