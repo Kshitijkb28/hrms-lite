@@ -1,6 +1,8 @@
 const { Sequelize } = require('sequelize');
 require('dotenv').config();
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 const sequelize = new Sequelize(
     process.env.DB_NAME || 'hrms_lite',
     process.env.DB_USER || 'phpmyadmin',
@@ -19,8 +21,16 @@ const sequelize = new Sequelize(
         define: {
             timestamps: true,
             underscored: true
-        }
+        },
+        // TiDB Cloud requires SSL
+        dialectOptions: isProduction ? {
+            ssl: {
+                minVersion: 'TLSv1.2',
+                rejectUnauthorized: true
+            }
+        } : {}
     }
 );
 
 module.exports = sequelize;
+
